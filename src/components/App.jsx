@@ -36,17 +36,27 @@ class App extends React.Component {
   }
 
   addMovieToWillWatch = movie => {
-    console.log(movie);
+    // console.log(movie);
     // this.state.moviesWillWatch.push(movie);
-    const updateMovies = [...this.state.moviesWillWatch, movie];
-    updateMovies.push(movie);
+    const updateMoviesWillWatch = [...this.state.moviesWillWatch, movie];
+    
     this.setState({
-      moviesWillWatch: updateMovies
+      moviesWillWatch: updateMoviesWillWatch
     });
   };
 
+  removeMovieFromWillWatch = movie => {
+    const updateMoviesWillWatch = this.state.moviesWillWatch.filter(function(item) {
+      return item.id !== movie.id;
+    });
+    this.setState({
+      moviesWillWatch: updateMoviesWillWatch
+    });
+  };
+
+
   render () {
-    console.log("render", this.state, this);
+    // console.log("render", this.state, this);
     return (
       <div className="container">
         <div className="row">
@@ -54,8 +64,12 @@ class App extends React.Component {
             <div className="row">
               {this.state.movies.map(movie => {
                 return (
-                  <div className="col-6 mb-4" key={movie.id}>
-                      <MovieItem movie ={movie}  removeMovie = {this.removeMovie}  addMovieToWillWatch = {this.addMovieToWillWatch} />   
+                  <div className="col-4 mb-4 mr-8" key={movie.id}>
+                      <MovieItem movie ={movie}
+                        removeMovie = {this.removeMovie}
+                        addMovieToWillWatch = {this.addMovieToWillWatch} 
+                        removeMovieFromWillWatch = {this.removeMovieFromWillWatch}
+                      />   
                   </div>
                 );
               })}
